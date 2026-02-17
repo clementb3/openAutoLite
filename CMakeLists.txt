@@ -8,8 +8,11 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 add_executable(openAutoLiteApp ${SOURCES})
 
-target_include_directories(openAutoLiteApp PRIVATE include)
-
+target_include_directories(openAutoLiteApp PRIVATE 
+    "${BASE_DIR}/include"
+    "${BASE_DIR}/src"
+    "${CMAKE_CURRENT_SOURCE_DIR}/include"
+)
 find_package(Threads REQUIRED)
 target_link_libraries(openAutoLiteApp PRIVATE Threads::Threads)
 

@@ -1,4 +1,5 @@
-#include "CanService.h"
+#include "canService.h"
+#include "actionCan.h"
 #include <thread>
 #include <iostream>
 
@@ -9,10 +10,9 @@ int main() {
         std::cerr << "Erreur init CAN" << std::endl;
         return 1;
     }
-
-    can.setOnMessageReceived([](const service::CanMessage& msg) {
-        std::cout << "Receive ID: 0x" << std::hex << msg.id << " | Data size: " << std::dec << msg.data.size() << std::endl;
-        });
+    else {
+        can.setOnMessageReceived(openauto::actionCan::onMessage);
+    }
 
     std::thread canThread(&service::CanService::run, &can);
 
