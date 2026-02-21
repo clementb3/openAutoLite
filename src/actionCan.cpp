@@ -42,12 +42,12 @@ namespace openauto {
 
 	void actionCan::volumePlus() {
 		std::cout << "[Action] Volume Up (+5%)" << std::endl;
-		std::system("amixer -q sset Master 5%+");
+		std::system("amixer -D bluealsa sset 'Z Fold4 de clement A2DP' 5%+");
 	}
 
 	void actionCan::volumeMinus() {
 		std::cout << "[Action] Volume Down (-5%)" << std::endl;
-		std::system("amixer -q sset Master 5%-");
+		std::system("amixer -D bluealsa sset 'Z Fold4 de clement A2DP' 5%-");
 	}
 
 	void actionCan::nextTrack() {
