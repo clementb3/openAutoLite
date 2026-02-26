@@ -59,8 +59,20 @@ namespace service {
             }
 
             CanMessage msg;
-            msg.id = frame.can_id;
-            msg.data.assign(frame.data, frame.data + frame.can_dlc);
+            uint32_t id = frame.can_id;
+            std::vector<uint8_t> newData(frame.data, frame.data + frame.can_dlc);
+
+            if (_lastMessages.count(id) && _lastMessages[id] == newData) {
+                continue;
+            }
+            _lastMessages[id] = newData;
+
+            if (_onMessageReceived) {
+                CanMessage msg;
+                msg.id = id;
+                msg.data = newData;
+                _onMessageReceived(msg);
+            }
 
             if (_onMessageReceived) {
                 _onMessageReceived(msg);

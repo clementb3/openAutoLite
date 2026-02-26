@@ -6,6 +6,7 @@
 #include <functional>
 #include <cstdint>
 #include <linux/can.h>
+#include <map>
 
 namespace service {
 
@@ -34,6 +35,7 @@ namespace service {
         void setOnMessageReceived(MessageCallback callback);
 
     private:
+        std::map<uint32_t, std::vector<uint8_t>> _lastMessages;
         int _socket{ -1 };
         std::atomic<bool> _running{ false };
         MessageCallback _onMessageReceived;

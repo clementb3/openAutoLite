@@ -11,6 +11,7 @@ int main() {
         return 1;
     }
     else {
+		can.sendMessage(0x416, { 0xFC, 0x16, 0x3F, 0xFF, 0xFF , 0xFF, 0xFF, 0xFF });
         can.setOnMessageReceived(openauto::actionCan::onMessage);
     }
 
