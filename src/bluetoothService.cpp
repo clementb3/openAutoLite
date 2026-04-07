@@ -24,10 +24,10 @@ namespace service {
 
         if (!lastMac.empty()) {
             std::cout << "[BT] connect to " << lastMac << std::endl;
-            std::system(("bluetoothctl connect " + lastMac);
+            std::system(("bluetoothctl connect " + lastMac).c_str());
             std::this_thread::sleep_for(std::chrono::seconds(2));
             if (!isBluetoothConnected()) {
-                std::system(("bluetoothctl connect " + lastMac);
+                std::system(("bluetoothctl connect " + lastMac).c_str());
             }
             std::this_thread::sleep_for(std::chrono::seconds(2));
             if (isBluetoothConnected()) {
