@@ -20,6 +20,8 @@ namespace openauto {
 				case 0x02:
 					previousTrack();
 					break;
+				default:
+						break;
 				}
 			}
 			break;
@@ -31,6 +33,7 @@ namespace openauto {
 					break;
 				case 0x80:
 					break;
+				default: break;
 				}
 			}
 			break;

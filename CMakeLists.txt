@@ -5,8 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
+file(GLOB_RECURSE HEADERS "include/*.h")
 
-add_executable(openAutoLiteApp ${SOURCES})
+add_executable(openAutoLiteApp ${SOURCES} ${HEADERS})
 
 target_include_directories(openAutoLiteApp PRIVATE 
     "${BASE_DIR}/include"

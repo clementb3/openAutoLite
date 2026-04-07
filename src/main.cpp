@@ -1,25 +1,27 @@
 #include "canService.h"
+#include "bluetoothService.h"
 #include "actionCan.h"
 #include <thread>
 #include <iostream>
 
 int main() {
-    service::CanService can;
+    service::CanService canService;
+    service::BluetoothService bluetoothService;
+    
+    std::thread bluetoothThread(&service::BluetoothService::run, &bluetoothService);
+    std::cout << "bluetooth Service started" << std::endl;
 
-    if (!can.init("can0")) {
+    if (!canService.init("can0")) {
         std::cerr << "Erreur init CAN" << std::endl;
-        return 1;
     }
     else {
-		can.sendMessage(0x416, { 0xFC, 0x16, 0x3F, 0xFF, 0xFF , 0xFF, 0xFF, 0xFF });
-        can.setOnMessageReceived(openauto::actionCan::onMessage);
+        canService.setOnMessageReceived(openauto::actionCan::onMessage);
+        std::thread canThread(&service::CanService::run, &canService);
+        std::cout << "CAN Service started" << std::endl;
+        if (canThread.joinable()) canThread.join();
     }
 
-    std::thread canThread(&service::CanService::run, &can);
-
-    std::cout << "CAN Service started" << std::endl;
-
-    canThread.join();
+    if (bluetoothThread.joinable()) bluetoothThread.join();
 
     return 0;
 }
