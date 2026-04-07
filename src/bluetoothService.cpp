@@ -18,6 +18,7 @@ namespace service {
 
         if (!lastMac.empty()) {
             std::cout << "[BT] connect to " << lastMac << std::endl;
+            std::system(("bluetoothctl connect " + lastMac).c_str());
             if (int result = std::system(("bluetoothctl connect " + lastMac).c_str()); result == 0) {
                 std::cout << "[BT] connected" << std::endl;
             }
