@@ -3,6 +3,13 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
+#Cmake compilation
+CMakeCache.txt
+CMakeFiles/
+Makefile
+cmake_install.cmake
+openAutoLiteApp
+
 # User-specific files
 *.rsuser
 *.suo
