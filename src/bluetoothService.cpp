@@ -6,6 +6,12 @@
 #include <chrono>
 
 namespace service {
+    struct PcloseDeleter {
+        void operator()(FILE *f) const {
+            if (f) pclose(f);
+        }
+    };
+
     BluetoothService::BluetoothService() : _running(true) {
     }
 
@@ -18,8 +24,13 @@ namespace service {
 
         if (!lastMac.empty()) {
             std::cout << "[BT] connect to " << lastMac << std::endl;
-            std::system(("bluetoothctl connect " + lastMac).c_str());
-            if (int result = std::system(("bluetoothctl connect " + lastMac).c_str()); result == 0) {
+            std::system(("bluetoothctl connect " + lastMac);
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            if (!isBluetoothConnected()) {
+                std::system(("bluetoothctl connect " + lastMac);
+            }
+            std::this_thread::sleep_for(std::chrono::seconds(2));
+            if (isBluetoothConnected()) {
                 std::cout << "[BT] connected" << std::endl;
             }
         }
@@ -59,7 +70,7 @@ namespace service {
         std::array<char, 128> buffer{};
         std::string result;
 
-        const std::unique_ptr<FILE, decltype(&pclose)> pipe(popen("bluetoothctl devices Connected", "r"), pclose);
+        const std::unique_ptr<FILE, PcloseDeleter> pipe(popen("bluetoothctl devices Connected", "r"));
         if (!pipe) {
             return false;
         }
@@ -73,7 +84,7 @@ namespace service {
         std::array<char, 128> buffer{};
         std::string result;
 
-        const std::unique_ptr<FILE, decltype(&pclose)> pipe(popen("bluetoothctl devices Connected", "r"), pclose);
+        const std::unique_ptr<FILE, PcloseDeleter> pipe(popen("bluetoothctl devices Connected", "r"));
         if (!pipe) {
             return "null";
         }
