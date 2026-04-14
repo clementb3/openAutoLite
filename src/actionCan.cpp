@@ -5,7 +5,8 @@ namespace openauto {
 	void actionCan::onMessage(const service::CanMessage &msg) {
 		switch (msg.id) {
 			case 0x1CA:
-				std::cout << "[Can receive message] id : " << msg.id << "content" << msg.data[0] << msg.data[1] <<
+				std::cout << "[Can receive message] id [" << msg.data.size() << "] " << msg.id << " : " << msg.data[0]
+						<< ":" << msg.data[1] <<
 						std::endl;
 				if (msg.data.size() == 4 && msg.data[0] == 0x03) {
 					switch (msg.data[1]) {
@@ -27,6 +28,9 @@ namespace openauto {
 				}
 				break;
 			case 0x1A8:
+				std::cout << "[Can receive message] id [" << msg.data.size() << "] " << msg.id << " : " << msg.data[0]
+						<< ":" << msg.data[1] <<
+						std::endl;
 				if (msg.data.size() == 2) {
 					switch (msg.data[0]) {
 						case 0x40:
