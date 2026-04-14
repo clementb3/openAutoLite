@@ -2,44 +2,45 @@
 #include <iostream>
 
 namespace openauto {
-
-	void actionCan::onMessage(const service::CanMessage& msg) {
+	void actionCan::onMessage(const service::CanMessage &msg) {
 		switch (msg.id) {
-		case 0x1CA:
-			if (msg.data.size() == 4 && msg.data[0] == 0x03) {
-				switch (msg.data[1]) {
-				case 0x10:
-					volumePlus();
-					break;
-				case 0x20:
-					volumeMinus();
-					break;
-				case 0x01:
-					nextTrack();
-					break;
-				case 0x02:
-					previousTrack();
-					break;
-				default:
-						break;
+			case 0x1CA:
+				std::cout << "[Can receive message] id : " << msg.id << "content" << msg.data[0] << msg.data[1] <<
+						std::endl;
+				if (msg.data.size() == 4 && msg.data[0] == 0x03) {
+					switch (msg.data[1]) {
+						case 0x10:
+							volumePlus();
+							break;
+						case 0x20:
+							volumeMinus();
+							break;
+						case 0x01:
+							nextTrack();
+							break;
+						case 0x02:
+							previousTrack();
+							break;
+						default:
+							break;
+					}
 				}
-			}
-			break;
-		case 0x1A8:
-			if (msg.data.size() == 2) {
-				switch (msg.data[0]) {
-				case 0x40:
-					playPause();
-					break;
-				case 0x80:
-					break;
-				default: break;
+				break;
+			case 0x1A8:
+				if (msg.data.size() == 2) {
+					switch (msg.data[0]) {
+						case 0x40:
+							playPause();
+							break;
+						case 0x80:
+							break;
+						default: break;
+					}
 				}
-			}
-			break;
+				break;
 
-		default:
-			break;
+			default:
+				break;
 		}
 	}
 
@@ -67,5 +68,4 @@ namespace openauto {
 		std::cout << "[Action] Play/Pause Toggle" << std::endl;
 		std::system("playerctl play-pause");
 	}
-
 }
