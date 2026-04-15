@@ -9,7 +9,7 @@ namespace openauto {
 						std::uppercase << msg.id << " : " << +msg.data[0]
 						<< ":" << +msg.data[1] <<
 						std::endl;
-				if (msg.data.size() == 4 && msg.data[0] == 0x03) {
+				/*if (msg.data.size() == 4 && msg.data[0] == 0x03) {
 					switch (msg.data[1]) {
 						case 0x10:
 							volumePlus();
@@ -26,7 +26,7 @@ namespace openauto {
 						default:
 							break;
 					}
-				}
+				}*/
 				break;
 			case 0x1A8:
 				std::cout << "[Can receive message] id [" << msg.data.size() << "] " << msg.id << " : " << msg.data[0]
@@ -36,6 +36,12 @@ namespace openauto {
 					switch (msg.data[0]) {
 						case 0x40:
 							playPause();
+							break;
+						case 0x10:
+							volumeMinus();
+							break;
+						case 0x20:
+							volumePlus();
 							break;
 						case 0x80:
 							break;
