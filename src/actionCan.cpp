@@ -5,11 +5,13 @@ namespace openauto {
 	void actionCan::onMessage(const service::CanMessage &msg) {
 		switch (msg.id) {
 			case 0x1CA:
-				std::cout << "[Can receive message] id [1CA] " << std::hex << std::showbase <<
-						std::uppercase << msg.id << " : " << msg.data[0]
-						<< ":" << +msg.data[1] <<
-						std::endl;
 				/*if (msg.data.size() == 4 && msg.data[0] == 0x03) {
+					std::cout << "[Can receive message] id [1CA] " << std::hex << std::showbase <<
+						std::uppercase << msg.id << " : " << +msg.data[0]
+							<< ":" << +msg.data[1] <<
+							std::endl;
+				}*/
+				if (msg.data.size() == 4 && msg.data[0] == 0x03) {
 					switch (msg.data[1]) {
 						case 0x10:
 							volumePlus();
@@ -17,16 +19,16 @@ namespace openauto {
 						case 0x20:
 							volumeMinus();
 							break;
-						case 0x01:
+						case 0x1:
 							nextTrack();
 							break;
-						case 0x02:
+						case 0x2:
 							previousTrack();
 							break;
 						default:
 							break;
 					}
-				}*/
+				}
 				break;
 			case 0x1A8:
 				if (msg.data.size() == 2) {
@@ -35,10 +37,10 @@ namespace openauto {
 							playPause();
 							break;
 						case 0x10:
-							volumePlus();
+				//			volumePlus();
 							break;
 						case 0x20:
-							volumeMinus();
+				//			volumeMinus();
 							break;
 						case 0x80:
 							nextTrack();
