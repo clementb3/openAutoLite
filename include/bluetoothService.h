@@ -17,8 +17,9 @@ namespace service {
         void stop();
 
         void run() const;
+        static std::string getDevice();
 
-    private:
+      private:
         std::atomic<bool> _running{false};
 
         static std::string readLastDevice();
@@ -26,7 +27,5 @@ namespace service {
         static void saveDevice(const std::string &mac);
 
         static bool isBluetoothConnected();
-
-        static std::string getDevice();
     };
 }

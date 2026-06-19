@@ -1,6 +1,8 @@
 #include "actionCan.h"
 #include <iostream>
 
+#include "bluetoothService.h"
+
 namespace openauto {
 	void actionCan::onMessage(const service::CanMessage &msg) {
 		switch (msg.id) {
@@ -14,10 +16,10 @@ namespace openauto {
 				if (msg.data.size() == 4 && msg.data[0] == 0x03) {
 					switch (msg.data[1]) {
 						case 0x10:
-							volumePlus();
+						//	volumePlus();
 							break;
 						case 0x20:
-							volumeMinus();
+						//	volumeMinus();
 							break;
 						case 0x1:
 							nextTrack();
@@ -37,10 +39,10 @@ namespace openauto {
 							playPause();
 							break;
 						case 0x10:
-				//			volumePlus();
+							volumePlus();
 							break;
 						case 0x20:
-				//			volumeMinus();
+							volumeMinus();
 							break;
 						case 0x80:
 							nextTrack();
@@ -57,12 +59,12 @@ namespace openauto {
 
 	void actionCan::volumePlus() {
 		std::cout << "[Action] Volume Up (+5%)" << std::endl;
-		std::system("amixer -D bluealsa sset 'Z Fold4 de clement A2DP' 5%+");
+		std::system(("amixer -D bluealsa sset '" + service::BluetoothService::getDevice()+" A2DP' 5%+").c_str());
 	}
 
 	void actionCan::volumeMinus() {
 		std::cout << "[Action] Volume Down (-5%)" << std::endl;
-		std::system("amixer -D bluealsa sset 'Z Fold4 de clement A2DP' 5%-");
+		std::system(("amixer -D bluealsa sset '" + service::BluetoothService::getDevice() +" A2DP' 5%-").c_str());
 	}
 
 	void actionCan::nextTrack() {
